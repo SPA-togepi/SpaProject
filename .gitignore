@@ -19,3 +19,4 @@ proguard/
 .gradle
 app/build/
 .DS_Store
+!/.idea

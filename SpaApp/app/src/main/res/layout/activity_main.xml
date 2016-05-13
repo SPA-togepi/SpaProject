@@ -13,4 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+    
+    <Button
+        android:id="@+id/blactBtn"
+        android:layout_width="64dp"
+        android:layout_height="64dp" />
 </RelativeLayout>
