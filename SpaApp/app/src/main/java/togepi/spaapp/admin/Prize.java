@@ -13,6 +13,8 @@ import togepi.spaapp.utility.Genre;
 public class Prize {
     //賞品URL
     public URL url;
+    //賞品金額
+    public int price;
     //賞品画像
     public Bitmap image;
     //賞品名
