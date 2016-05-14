@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AccelaratorSample.AcceralatorActivity" />
+        <activity android:name=".AccelaratorSample.SensorActivity"></activity>
+        <activity android:name=".SQLite.SQLiteActivity" />
+        <activity android:name=".SQLite.ShowDbActivity" />
+        <activity android:name=".SQLite.SQliteEditActivity"></activity>
     </application>
 
 </manifest>
