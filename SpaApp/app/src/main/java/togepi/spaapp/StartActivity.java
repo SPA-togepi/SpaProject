@@ -1,5 +1,6 @@
 package togepi.spaapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -108,6 +110,7 @@ public class StartActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_start, container, false);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
     }
@@ -143,6 +146,15 @@ public class StartActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_admin_start, container, false);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            Button makePartyButton = (Button) rootView.findViewById(R.id.createPartyButton);
+            makePartyButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
+                    startActivity(intent);
+                }
+            });
             return rootView;
         }
     }
