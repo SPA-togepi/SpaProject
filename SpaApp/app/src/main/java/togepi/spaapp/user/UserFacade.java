@@ -1,13 +1,12 @@
 package togepi.spaapp.user;
 
+import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import togepi.spaapp.SQLite.SQLite;
 import togepi.spaapp.admin.Prize;
@@ -28,19 +27,19 @@ public class UserFacade {
      * パーティに参加する
      * @param hostID パーティID
      */
-    public void JoinParty(String hostID){
+    public void JoinParty(String hostID, Context context){
         try{
             //userIDが登録されてるか確認
-            String userID = sqLite.GetUserID();
+            String userID = sqLite.GetUserID(context);
 
             if(userID == null || userID.equals("")){
                 //新しくIDを作る
-                sqLite.SetUserID(userID);
+                sqLite.SetUserID(userID, context);
             }
 
             //POST パーティに参加する
 
-            sqLite.SetHostID(hostID);
+            sqLite.SetHostID(hostID, context);
         }
         catch (Exception e){
             Log.e("Join Party",e.toString());
@@ -51,10 +50,10 @@ public class UserFacade {
      * カンパする
      * @param donationAmount カンパする金額
      */
-    public void Donate(int donationAmount)  {
+    public void Donate(int donationAmount, Context context)  {
         try{
-            String hostID = sqLite.GetHostID();
-            String userID = sqLite.GetUserID();
+            String hostID = sqLite.GetHostID(context);
+            String userID = sqLite.GetUserID(context);
 
             //カンパ受付中か確認する
 
@@ -63,7 +62,8 @@ public class UserFacade {
             json.accumulate("id",userID);
             json.accumulate("donationAmount",donationAmount);
 
-            httpRequest.httpRequest("",json.toString());
+//            httpRequest = new HttpRequest();
+//            httpRequest.doPost("",json.toString());
 
         }
         catch (Exception e){
@@ -97,12 +97,12 @@ public class UserFacade {
      * 現在の合計金額を取得する
      * @return 現在の合計金額
      */
-    public int GetCurrentMoney(){
+    public int GetCurrentMoney(Context context){
 
         int currentMoney = 0;
 
         try{
-            String hostID = sqLite.GetHostID();
+            String hostID = sqLite.GetHostID(context);
 
             //POST 現在の合計金額を取得する
         }
@@ -117,12 +117,12 @@ public class UserFacade {
      * 現在の自分のカンパ金額を取得する
      * @return 現在の自分のカンパ金額
      */
-    public int GetCurrentDonationAmount(){
+    public int GetCurrentDonationAmount(Context context){
         int currentDonationAmount = 0;
 
         try{
-            String hostID = sqLite.GetHostID();
-            String userID = sqLite.GetUserID();
+            String hostID = sqLite.GetHostID(context);
+            String userID = sqLite.GetUserID(context);
 
             //POST 現在のカンパ金額取得
 

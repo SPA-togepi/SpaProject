@@ -107,6 +107,16 @@ public class StartActivity extends AppCompatActivity {
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
+            Button joinPartyButton = (Button) rootView.findViewById(R.id.joinPartyButton);
+            joinPartyButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    //入れたパーティIDがあれば、参加する。
+//                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
+//                    startActivity(intent);
+                }
+            });
             return rootView;
         }
     }
@@ -142,8 +152,8 @@ public class StartActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_admin_start, container, false);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            Button makePartyButton = (Button) rootView.findViewById(R.id.createPartyButton);
-            makePartyButton.setOnClickListener(new View.OnClickListener(){
+            Button createPartyButton = (Button) rootView.findViewById(R.id.createPartyButton);
+            createPartyButton.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
@@ -153,25 +163,15 @@ public class StartActivity extends AppCompatActivity {
             });
 
             Button managePartyButton = (Button) rootView.findViewById(R.id.buttonPartyManagement);
-            makePartyButton.setOnClickListener(new View.OnClickListener(){
+            managePartyButton.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
+                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), AdminActivity.class);
                     startActivity(intent);
                 }
             });
 
-            Button joinPartyButton = (Button) rootView.findViewById(R.id.joinPartyButton);
-            makePartyButton.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    //入れたパーティIDがあれば、参加する。
-//                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
-//                    startActivity(intent);
-                }
-            });
             return rootView;
         }
     }

@@ -1,5 +1,6 @@
 package togepi.spaapp.admin;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class AdminFacade {
      * @param rankingFlag 順位付けをするか。true:yes false:no
      * @param prizeGenreList 賞品のジャンルリスト。先頭が1位
      */
-    public void SettingParty(int initialMoney, int prizeNumber, boolean rankingFlag, List<Genre> prizeGenreList){
+    public void SettingParty(int initialMoney, int prizeNumber, boolean rankingFlag, List<Genre> prizeGenreList, Context context){
         try{
-            String hostID = sqLite.GetHostID();
+            String hostID = sqLite.GetHostID(context);
             List<Integer> valueOdRank = GetValueOfRank(initialMoney,prizeNumber,rankingFlag);
 
             for(int i =1;i <= valueOdRank.size();i++){
@@ -60,7 +61,7 @@ public class AdminFacade {
             partySetting.setRankingFlag(rankingFlag);
             partySetting.setGenreList(prizeGenreList);
 
-            sqLite.SetPartySetting(partySetting);
+            sqLite.SetPartySetting(partySetting,context);
 
         }
         catch (Exception e){
