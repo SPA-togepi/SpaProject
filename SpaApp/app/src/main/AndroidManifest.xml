@@ -22,7 +22,10 @@
         <activity android:name=".NewPartyActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".ItemListActivity"></activity>
+        <activity android:name=".ItemListActivity" />
+        <activity
+            android:name=".AdminSettingsActivity"
+            android:label="@string/title_activity_admin_settings"></activity>
     </application>
 
 </manifest>
