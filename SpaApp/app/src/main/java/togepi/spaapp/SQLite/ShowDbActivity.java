@@ -24,13 +24,13 @@ public class ShowDbActivity extends AppCompatActivity {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         // queryメソッドの実行例
-        Cursor c = db.query("person", new String[] { "_id", "name", "role" }, null, null, null, null, null);
+        Cursor c = db.query("users", new String[] { "_id", "donationAmount"}, null, null, null, null, null);
 
         boolean mov = c.moveToFirst();
 
         while (mov) {
             TextView textView = new TextView(this);
-            textView.setText(String.format("%d : 名前 %s, 役割 %s", c.getInt(0), c.getString(1),c.getString(2)));
+            textView.setText(String.format("%d : 名前 %s", c.getInt(0), c.getString(1)));
 
             mov = c.moveToNext();
 
