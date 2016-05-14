@@ -3,6 +3,8 @@ package togepi.spaapp.user;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 import togepi.spaapp.SQLite.SQLite;
 import togepi.spaapp.admin.Prize;
 import togepi.spaapp.common.HttpRequest;
+import togepi.spaapp.common.HttpResponse;
 
 /**
  * Created by youmemusic on 2016/05/14.
@@ -57,10 +60,10 @@ public class UserFacade {
 
             //カンパ受付中か確認する
 
-            JSONObject json = new JSONObject();
-            json.accumulate("hostID",hostID);
-            json.accumulate("id",userID);
-            json.accumulate("donationAmount",donationAmount);
+            JSONObject requestJson = new JSONObject();
+            requestJson.accumulate("hostID",hostID);
+            requestJson.accumulate("id",userID);
+            requestJson.accumulate("donationAmount",donationAmount);
 
 //            httpRequest = new HttpRequest();
 //            httpRequest.doPost("",json.toString());
@@ -105,6 +108,12 @@ public class UserFacade {
             String hostID = sqLite.GetHostID(context);
 
             //POST 現在の合計金額を取得する
+            JSONObject requestJson = new JSONObject();
+            requestJson.accumulate("hostID",hostID);
+
+            HttpResponse response = httpRequest.doPost("",requestJson.toString());
+            
+
         }
         catch (Exception e){
             Log.e("GetCurrentMoney",e.toString());
@@ -125,6 +134,11 @@ public class UserFacade {
             String userID = sqLite.GetUserID(context);
 
             //POST 現在のカンパ金額取得
+            JSONObject requestJson = new JSONObject();
+            requestJson.accumulate("hostID",hostID);
+            requestJson.accumulate("userID",userID);
+
+            HttpResponse resonse = httpRequest.doPost("",requestJson.toString());
 
         }
         catch (Exception e){

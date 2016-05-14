@@ -13,17 +13,18 @@ public class HttpResponse {
     private JSONArray jsonArray;
 
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    public void setStatus(int status) { this.status = status; }
+    public int getStatus() { return this.status; }
 
     public void setBody(String body) {
         this.body = body;
     }
+    public String getBody() { return this.body; }
 
     public void setJSONArray(JSONArray JSONArray) {
         this.jsonArray = JSONArray;
     }
+    public JSONArray getJsonArray() { return this.jsonArray; }
 }
 //public class HttpResponse extends AsyncTask<Void, Void, JSONObject> {
 //
