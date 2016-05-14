@@ -151,6 +151,27 @@ public class StartActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+
+            Button managePartyButton = (Button) rootView.findViewById(R.id.buttonPartyManagement);
+            makePartyButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            Button joinPartyButton = (Button) rootView.findViewById(R.id.joinPartyButton);
+            makePartyButton.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    //入れたパーティIDがあれば、参加する。
+//                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
+//                    startActivity(intent);
+                }
+            });
             return rootView;
         }
     }
