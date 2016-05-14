@@ -5,4 +5,12 @@ package togepi.spaapp.utility;
  */
 public class Network {
     public String hostID;
+
+    public String getHostID() {
+        return hostID;
+    }
+
+    public void setHostID(String hostID) {
+        this.hostID = hostID;
+    }
 }
