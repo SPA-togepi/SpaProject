@@ -44,7 +44,7 @@ public class HttpRequest {
      * @param uri URI
      * @param postData POSTするデータ
      */
-    protected HttpResponse doPost(String urlStr, String jsonStr) throws IOException {
+    public HttpResponse doPost(String urlStr, String jsonStr) throws IOException {
 
         HttpResponse httpResponse = null;
         try {
