@@ -1,10 +1,17 @@
 package togepi.spaapp.user;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import togepi.spaapp.SQLite.SQLite;
 import togepi.spaapp.admin.Prize;
+import togepi.spaapp.common.HttpRequest;
 
 /**
  * Created by youmemusic on 2016/05/14.
@@ -14,19 +21,54 @@ public class UserFacade {
     public UserFacade() {
     }
 
+    SQLite sqLite;
+    HttpRequest httpRequest;
+
     /**
      * パーティに参加する
      * @param hostID パーティID
      */
     public void JoinParty(String hostID){
+        try{
+            //userIDが登録されてるか確認
+            String userID = sqLite.GetUserID();
 
+            if(userID == null || userID.equals("")){
+                //新しくIDを作る
+                sqLite.SetUserID(userID);
+            }
+
+            //POST パーティに参加する
+
+            sqLite.SetHostID(hostID);
+        }
+        catch (Exception e){
+            Log.e("Join Party",e.toString());
+        }
     }
 
     /**
      * カンパする
      * @param donationAmount カンパする金額
      */
-    public void Donate(int donationAmount){
+    public void Donate(int donationAmount)  {
+        try{
+            String hostID = sqLite.GetHostID();
+            String userID = sqLite.GetUserID();
+
+            //カンパ受付中か確認する
+
+            JSONObject json = new JSONObject();
+            json.accumulate("hostID",hostID);
+            json.accumulate("id",userID);
+            json.accumulate("donationAmount",donationAmount);
+
+            httpRequest.httpRequest("",json.toString());
+
+        }
+        catch (Exception e){
+            Log.e("Donate",e.toString());
+        }
 
     }
 
@@ -38,6 +80,16 @@ public class UserFacade {
     public List<Prize> GetPrizeInfo(int price){
         List<Prize> prizeList = new ArrayList<Prize>();
 
+        try{
+            //POST 賞品の一覧を取得する
+
+            //もらった値をprizeにしてく。
+
+        }
+        catch(Exception e){
+            Log.e("GetPrizeInfo",e.toString());
+        }
+
         return prizeList;
     }
 
@@ -46,7 +98,17 @@ public class UserFacade {
      * @return 現在の合計金額
      */
     public int GetCurrentMoney(){
+
         int currentMoney = 0;
+
+        try{
+            String hostID = sqLite.GetHostID();
+
+            //POST 現在の合計金額を取得する
+        }
+        catch (Exception e){
+            Log.e("GetCurrentMoney",e.toString());
+        }
 
         return currentMoney;
     }
@@ -57,6 +119,18 @@ public class UserFacade {
      */
     public int GetCurrentDonationAmount(){
         int currentDonationAmount = 0;
+
+        try{
+            String hostID = sqLite.GetHostID();
+            String userID = sqLite.GetUserID();
+
+            //POST 現在のカンパ金額取得
+
+        }
+        catch (Exception e){
+            Log.e("GetDonationAmount",e.toString());
+        }
+
         return currentDonationAmount;
     }
 

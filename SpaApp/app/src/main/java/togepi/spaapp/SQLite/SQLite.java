@@ -3,6 +3,7 @@ package togepi.spaapp.SQLite;
 import java.util.HashMap;
 import java.util.Map;
 
+import togepi.spaapp.utility.Genre;
 import togepi.spaapp.utility.PartySetting;
 
 /**
@@ -55,7 +56,17 @@ public class SQLite {
     /**
      * パーティ設定をDBに登録する
      */
-    public void SetPartySetting(){
+    public void SetPartySetting(PartySetting partySetting){
+
+    }
+
+    /**
+     * 賞品の順位と金額とジャンルをDBに登録する
+     * @param rank
+     * @param value
+     * @param genre
+     */
+    public void SetGenreOgRanking(int rank, int value, Genre genre){
 
     }
 
