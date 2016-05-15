@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import togepi.spaapp.SQLite.SQLite;
+import togepi.spaapp.common.HttpRequest;
+import togepi.spaapp.common.HttpResponse;
 import togepi.spaapp.utility.Genre;
 import togepi.spaapp.utility.PartySetting;
 
@@ -15,7 +17,8 @@ import togepi.spaapp.utility.PartySetting;
  */
 public class AdminFacade {
 
-    SQLite sqLite;
+    SQLite sqLite = new SQLite();
+    HttpRequest httpRequest = new HttpRequest();
 
     /**
      * パーティーを新規作成する
@@ -26,6 +29,9 @@ public class AdminFacade {
             String checkHostID = "";
             if(checkHostID == null || checkHostID.equals("")){
                 //POST hostIDを登録する
+                //GET hostIDを登録する
+                String getRequestUrl = "" + "hostID?=" + hostID;
+                httpRequest.doGet(getRequestUrl);
             }
         }
         catch (Exception e){
@@ -69,6 +75,8 @@ public class AdminFacade {
         }
 
     }
+
+
 
     /**
      * カンパを締め切る

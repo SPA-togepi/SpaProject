@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 import togepi.spaapp.SQLite.SQLite;
@@ -23,8 +24,8 @@ public class UserFacade {
     public UserFacade() {
     }
 
-    SQLite sqLite;
-    HttpRequest httpRequest;
+    SQLite sqLite = new SQLite();
+    HttpRequest httpRequest = new HttpRequest();
 
     /**
      * パーティに参加する
@@ -36,11 +37,18 @@ public class UserFacade {
             String userID = sqLite.GetUserID(context);
 
             if(userID == null || userID.equals("")){
-                //新しくIDを作る
+                //GET 新しくIDを作る
+                String getRequestUrl = "" ;
+                HttpResponse response = httpRequest.doGet(getRequestUrl);
+                userID = response.getJsonArray().getString("id");
+
                 sqLite.SetUserID(userID, context);
             }
 
             //POST パーティに参加する
+            //GET パーティに参加する
+            String getRequestUrl = "" + "hostID?="+hostID+"&id?="+userID;
+            httpRequest.doGet(getRequestUrl);
 
             sqLite.SetHostID(hostID, context);
         }
@@ -60,13 +68,16 @@ public class UserFacade {
 
             //カンパ受付中か確認する
 
-            JSONObject requestJson = new JSONObject();
-            requestJson.accumulate("hostID",hostID);
-            requestJson.accumulate("id",userID);
-            requestJson.accumulate("donationAmount",donationAmount);
-
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//            requestJson.accumulate("id",userID);
+//            requestJson.accumulate("donationAmount",donationAmount);
+//
 //            httpRequest = new HttpRequest();
-//            httpRequest.doPost("",json.toString());
+//            httpRequest.doPost("",requestJson.toString());
+            //GET カンパする
+            String getRequestUrl = ""+"hostID?=" + hostID + "&id?=" + userID + "&donationAmount?=" + donationAmount;
+            httpRequest.doGet(getRequestUrl);
 
         }
         catch (Exception e){
@@ -108,11 +119,16 @@ public class UserFacade {
             String hostID = sqLite.GetHostID(context);
 
             //POST 現在の合計金額を取得する
-            JSONObject requestJson = new JSONObject();
-            requestJson.accumulate("hostID",hostID);
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//
+//            HttpResponse response = httpRequest.doPost("",requestJson.toString());
+//            currentMoney = response.getJsonArray().getInt("currentMoney");
 
-            HttpResponse response = httpRequest.doPost("",requestJson.toString());
-            
+            //GET 現在の合計金額を取得する
+            String getRequestUrl = "" + "hostID?=" + hostID;
+            HttpResponse response = httpRequest.doGet(getRequestUrl);
+            currentMoney = response.getJsonArray().getInt("currentAmount");
 
         }
         catch (Exception e){
@@ -134,11 +150,19 @@ public class UserFacade {
             String userID = sqLite.GetUserID(context);
 
             //POST 現在のカンパ金額取得
-            JSONObject requestJson = new JSONObject();
-            requestJson.accumulate("hostID",hostID);
-            requestJson.accumulate("userID",userID);
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//            requestJson.accumulate("userID",userID);
+//
+//            HttpResponse response = httpRequest.doPost("",requestJson.toString());
+//            currentDonationAmount = response.getJsonArray().getInt("denationAmount");
 
-            HttpResponse resonse = httpRequest.doPost("",requestJson.toString());
+            //GET 現在のカンパ金額
+            String getRequestUrl = "" + "hostID?=" + hostID + "&id?=" + userID;
+            HttpResponse response = httpRequest.doGet(getRequestUrl);
+            JSONArray userInfoJson = response.getJsonArray().getJSONArray("User");
+            currentDonationAmount = userInfoJson.getInt(0);
+
 
         }
         catch (Exception e){

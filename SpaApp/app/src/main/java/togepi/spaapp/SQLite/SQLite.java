@@ -14,6 +14,10 @@ import togepi.spaapp.utility.PartySetting;
 public class SQLite {
 
 
+    public SQLite(){
+
+    }
+
     /**
      * パーティIDをDBから取得する
      * @return
