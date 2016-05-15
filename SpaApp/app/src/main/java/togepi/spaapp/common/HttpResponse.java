@@ -1,6 +1,7 @@
 package togepi.spaapp.common;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created by SuzukiRikuro on 2016/05/15.
@@ -10,7 +11,7 @@ public class HttpResponse {
 
     private int status;
     private String body;
-    private JSONArray jsonArray;
+    private JSONObject jsonArray;
 
 
     public void setStatus(int status) { this.status = status; }
@@ -21,10 +22,10 @@ public class HttpResponse {
     }
     public String getBody() { return this.body; }
 
-    public void setJSONArray(JSONArray JSONArray) {
+    public void setJSONArray(JSONObject JSONArray) {
         this.jsonArray = JSONArray;
     }
-    public JSONArray getJsonArray() { return this.jsonArray; }
+    public JSONObject getJsonArray() { return this.jsonArray; }
 }
 //public class HttpResponse extends AsyncTask<Void, Void, JSONObject> {
 //
