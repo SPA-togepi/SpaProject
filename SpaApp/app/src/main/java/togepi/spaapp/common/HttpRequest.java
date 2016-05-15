@@ -87,32 +87,12 @@ public class HttpRequest {
      * @param http http接続オブジェクト
      * @param webEncode エンコーディング
      */
-    private HttpResponse getResponse(HttpURLConnection http, JSONArray jsonArray) throws IOException {
+    private HttpResponse getResponse(HttpURLConnection con, JSONArray jsonArray) throws IOException {
         HttpResponse response = new HttpResponse();
         // ステータスコードの取得
-        response.setStatus(http.getResponseCode());
-
-        HttpURLConnection con = null;
-        URL url = null;
-        String urlStr = "http://ec2-54-199-215-9.ap-northeast-1.compute.amazonaws.com:3000/";
+        response.setStatus(con.getResponseCode());
 
         try {
-            // URLの作成
-            url = new URL(urlStr);
-            // 接続用HttpURLConnectionオブジェクト作成
-            con = (HttpURLConnection) url.openConnection();
-            // リクエストメソッドの設定
-            con.setRequestMethod("POST");
-            // リダイレクトを自動で許可しない設定
-            con.setInstanceFollowRedirects(false);
-            // URL接続からデータを読み取る場合はtrue
-            con.setDoInput(true);
-            // URL接続にデータを書き込む場合はtrue
-            con.setDoOutput(true);
-
-            // 接続開始
-            con.connect();
-
             // 本文の取得
             InputStream in = con.getInputStream();
             byte bodyByte[] = new byte[1024];
