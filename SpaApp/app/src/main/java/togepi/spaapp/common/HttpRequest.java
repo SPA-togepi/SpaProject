@@ -31,14 +31,22 @@ public class HttpRequest {
      * GETリクエスト。<br />
      * @param uri URI
      */
-//    protected HttpResponse doGet(String uri) throws IOException {
-//        URL urlObj = new URL("http://" + this.webHost + uri);
-//        HttpURLConnection http = (HttpURLConnection) urlObj.openConnection();
-//        http.setRequestMethod("GET");
-//        http.connect();
-//        // 結果を取得
-//        return getResponse(http, null);
-//    }
+    public HttpResponse doGet(String urlStr) throws IOException {
+
+        HttpURLConnection con = null;
+        try{
+            URL url = new URL(urlStr);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.connect();
+            return getResponse(con, null);
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            con.disconnect();
+        }
+        return null;
+    }
     /*
      * POSTリクエスト。<br />
      * @param uri URI
@@ -66,7 +74,7 @@ public class HttpRequest {
                     new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             buffer = reader.readLine();
 
-            JSONArray jsonArray = new JSONArray(buffer);
+            JSONObject jsonArray = new JSONObject(buffer);
 
             httpResponse = getResponse(con, jsonArray);
             con.disconnect();
@@ -87,7 +95,7 @@ public class HttpRequest {
      * @param http http接続オブジェクト
      * @param webEncode エンコーディング
      */
-    private HttpResponse getResponse(HttpURLConnection http, JSONArray jsonArray) throws IOException {
+    private HttpResponse getResponse(HttpURLConnection http, JSONObject jsonArray) throws IOException {
         HttpResponse response = new HttpResponse();
         // ステータスコードの取得
         response.setStatus(http.getResponseCode());
