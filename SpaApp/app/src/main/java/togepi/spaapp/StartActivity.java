@@ -104,17 +104,15 @@ public class StartActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_start, container, false);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             Button joinPartyButton = (Button) rootView.findViewById(R.id.joinPartyButton);
             joinPartyButton.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    //入れたパーティIDがあれば、参加する。
-//                    Intent intent = new Intent(AdminPlaceholderFragment.this.getActivity(), NewPartyActivity.class);
-//                    startActivity(intent);
+//                    入れたパーティIDがあれば、参加する。
+                    Intent intent = new Intent(PlaceholderFragment.this.getActivity(), UserActivity.class);
+                    startActivity(intent);
                 }
             });
             return rootView;
