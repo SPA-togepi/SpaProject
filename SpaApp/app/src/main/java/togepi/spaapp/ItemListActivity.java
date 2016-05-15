@@ -1,11 +1,8 @@
 package togepi.spaapp;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-
-import togepi.spaapp.img.AsyncTaskHttpRequest;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -14,13 +11,28 @@ public class ItemListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        ImageView imageView = (ImageView)findViewById(R.id.imageView1);
 
-        Uri uri = Uri.parse("http://cdn-ak.f.st-hatena.com/images/fotolife/f/fjswkun/20150927/20150927140905.jpg");
-        Uri.Builder builder = uri.buildUpon();
-        AsyncTaskHttpRequest task = new AsyncTaskHttpRequest(imageView);
-        task.execute(builder);
 
+        int price = getIntent().getIntExtra("price", 0);
+        int rank = getIntent().getIntExtra("rank", 0);
+        String genre = "electric";
+
+        if(price <= 2000){
+            price = 1000;
+        }else if(price > 2000 && price <= 3000){
+            price = 2000;
+        }else if(price > 3000){
+            price = 3000;
+        }
+
+        for(int i = 1 ; i < 4; i++) {
+            String resName = "a" + String.valueOf(price) + "_" + String.valueOf(i);
+            int resourceId = getResources().getIdentifier(resName, "drawable", getPackageName());
+            String viewName = "imageView" + String.valueOf(i);
+            int viewId = getResources().getIdentifier(viewName, "id", getPackageName());
+            ImageView imageView = (ImageView) findViewById(viewId);
+            imageView.setImageResource(resourceId);
+        }
 
     }
 }
