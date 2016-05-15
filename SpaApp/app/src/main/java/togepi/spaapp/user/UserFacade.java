@@ -15,6 +15,7 @@ import togepi.spaapp.SQLite.SQLite;
 import togepi.spaapp.admin.Prize;
 import togepi.spaapp.common.HttpRequest;
 import togepi.spaapp.common.HttpResponse;
+import togepi.spaapp.utility.ConstData;
 
 /**
  * Created by youmemusic on 2016/05/14.
@@ -38,7 +39,7 @@ public class UserFacade {
 
             if(userID == null || userID.equals("")){
                 //GET 新しくIDを作る
-                String getRequestUrl = "" ;
+                String getRequestUrl = ConstData.userUrl + "/new";
                 HttpResponse response = httpRequest.doGet(getRequestUrl);
                 userID = response.getJsonArray().getString("id");
 
@@ -47,7 +48,7 @@ public class UserFacade {
 
             //POST パーティに参加する
             //GET パーティに参加する
-            String getRequestUrl = "" + "hostID?="+hostID+"&id?="+userID;
+            String getRequestUrl = ConstData.userUrl + "/join/"+userID+"/"+hostID;
             httpRequest.doGet(getRequestUrl);
 
             sqLite.SetHostID(hostID, context);
@@ -76,7 +77,7 @@ public class UserFacade {
 //            httpRequest = new HttpRequest();
 //            httpRequest.doPost("",requestJson.toString());
             //GET カンパする
-            String getRequestUrl = ""+"hostID?=" + hostID + "&id?=" + userID + "&donationAmount?=" + donationAmount;
+            String getRequestUrl = ConstData.userUrl+"/donate/" + "/" + userID + "/" + donationAmount;
             httpRequest.doGet(getRequestUrl);
 
         }
@@ -125,10 +126,11 @@ public class UserFacade {
 //            HttpResponse response = httpRequest.doPost("",requestJson.toString());
 //            currentMoney = response.getJsonArray().getInt("currentMoney");
 
-            //GET 現在の合計金額を取得する
-            String getRequestUrl = "" + "hostID?=" + hostID;
+            //GET 現在のユーザ情報を取得する
+            String getRequestUrl = ConstData.adminUrl + "/" + hostID;
             HttpResponse response = httpRequest.doGet(getRequestUrl);
-            currentMoney = response.getJsonArray().getInt("currentAmount");
+
+            currentMoney = response.getJsonArray().getInt("current_money");
 
         }
         catch (Exception e){
@@ -146,7 +148,6 @@ public class UserFacade {
         int currentDonationAmount = 0;
 
         try{
-            String hostID = sqLite.GetHostID(context);
             String userID = sqLite.GetUserID(context);
 
             //POST 現在のカンパ金額取得
@@ -158,10 +159,9 @@ public class UserFacade {
 //            currentDonationAmount = response.getJsonArray().getInt("denationAmount");
 
             //GET 現在のカンパ金額
-            String getRequestUrl = "" + "hostID?=" + hostID + "&id?=" + userID;
+            String getRequestUrl = ConstData.userUrl + "/" + userID;
             HttpResponse response = httpRequest.doGet(getRequestUrl);
-            JSONArray userInfoJson = response.getJsonArray().getJSONArray("User");
-            currentDonationAmount = userInfoJson.getInt(0);
+            currentDonationAmount = response.getJsonArray().getInt("donated_money");
 
 
         }
