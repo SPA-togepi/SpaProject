@@ -1,5 +1,6 @@
 package togepi.spaapp;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class UserActivity extends AppCompatActivity implements SensorEventListen
 
     private int stepcount;
     private int stepcount2;
+
+    Button firstButton, secondeButton, thirdButton, campaButton;
 
     EditText campaEdit;
 
@@ -57,21 +61,52 @@ public class UserActivity extends AppCompatActivity implements SensorEventListen
 
         //TableLayoutのグループを取得
         ViewGroup vg = (ViewGroup) findViewById(R.id.TableLayout2);
+        firstButton = (Button) findViewById(R.id.firstButton);
+        secondeButton = (Button) findViewById(R.id.secondeButton);
+        thirdButton = (Button) findViewById(R.id.thirdButton);
+        campaEdit = (EditText) findViewById(R.id.editText2);
+        campaButton = (Button) findViewById(R.id.campaButton);
+
+        firstButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // クリック時の処理
+                Intent intent_first = new Intent(getApplicationContext(), ItemListActivity.class);
+                intent_first.putExtra("rank", 1);
+                intent_first.putExtra("price", 3000);
+                startActivity(intent_first);
+            }
+        });
+
+        secondeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // クリック時の処理
+                Intent intent_first = new Intent(getApplicationContext(), ItemListActivity.class);
+                intent_first.putExtra("rank", 2);
+                intent_first.putExtra("price", 2000);
+                startActivity(intent_first);
+            }
+        });
+
+        thirdButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // クリック時の処理
+                Intent intent_first = new Intent(getApplicationContext(), ItemListActivity.class);
+                intent_first.putExtra("rank", 3);
+                intent_first.putExtra("price", 1000);
+                startActivity(intent_first);
+            }
+        });
+
+        campaButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // クリック時の処理
+                int donate = Integer.parseInt(campaEdit.getText().toString());
+                userFacade.Donate(500, v.getContext());
+            }
+        });
 
         campaEdit = (EditText)findViewById(R.id.editText2);
 
-
-        for (int i = 0; i < itemnum; i++) {
-            //行を追加
-            getLayoutInflater().inflate(R.layout.table_row_users, vg);
-            //文字を設定
-            TableRow tr = (TableRow) vg.getChildAt(i);
-            String str = String.format(Locale.getDefault(), "%d等　", i + 1);
-            ((TextView) (tr.getChildAt(0))).setText(str);
-            ((Button) (tr.getChildAt(1))).setText(String.valueOf(list.get(0)));
-
-
-        }
 
         Log.d("onCreate","start");
         manager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -82,6 +117,8 @@ public class UserActivity extends AppCompatActivity implements SensorEventListen
         stepCntSensor = manager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
     }
+
+
 
     @Override
     public void onResume(){
