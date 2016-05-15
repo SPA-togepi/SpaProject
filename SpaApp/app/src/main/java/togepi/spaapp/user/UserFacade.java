@@ -87,6 +87,12 @@ public class UserFacade {
 
     }
 
+
+    public int GetShakeDonate(){
+
+        return 0;
+    }
+
     /**
      * 選択した順位の商品情報を取得する
      * @param price 賞品の金額
