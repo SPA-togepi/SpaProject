@@ -95,9 +95,7 @@ public class HttpRequest {
      * @param http http接続オブジェクト
      * @param webEncode エンコーディング
      */
-    private HttpResponse getResponse(HttpURLConnection http, JSONArray jsonArray) throws IOException {
-    private HttpResponse getResponse(HttpURLConnection con, JSONArray jsonArray) throws IOException {
-    private HttpResponse getResponse(HttpURLConnection http, JSONObject jsonArray) throws IOException {
+    private HttpResponse getResponse(HttpURLConnection con, JSONObject jsonArray) throws IOException {
         HttpResponse response = new HttpResponse();
         // ステータスコードの取得
         response.setStatus(con.getResponseCode());
