@@ -1,6 +1,5 @@
 package togepi.spaapp.common;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -13,6 +12,11 @@ public class HttpResponse {
     private String body;
     private JSONObject jsonArray;
 
+    HttpResponse(){}
+    HttpResponse(int status, String body){
+        this.status = status;
+        this.body = body;
+    }
 
     public void setStatus(int status) { this.status = status; }
     public int getStatus() { return this.status; }
