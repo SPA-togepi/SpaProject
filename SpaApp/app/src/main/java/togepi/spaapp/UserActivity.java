@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -96,16 +94,16 @@ public class UserActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent_first);
             }
         });
+        campaEdit = (EditText)findViewById(R.id.editText2);
+
 
         campaButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // クリック時の処理
                 int donate = Integer.parseInt(campaEdit.getText().toString());
-                userFacade.Donate(500, v.getContext());
+                userFacade.Donate(donate,UserActivity.this);
             }
         });
-
-        campaEdit = (EditText)findViewById(R.id.editText2);
 
 
         Log.d("onCreate","start");
