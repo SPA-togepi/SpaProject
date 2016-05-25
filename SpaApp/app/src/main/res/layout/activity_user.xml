@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="追加"
-            android:id="@+id/button2"
+            android:id="@+id/campaButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
@@ -91,5 +91,37 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/linearLayout"
         android:stretchColumns="1"></TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:orientation="vertical">
+
+            <Button
+                android:id="@+id/firstButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="一位 3000円 家電"/>
+
+        <Button
+            android:id="@+id/secondeButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="二位 2000円 家電"/>
+
+        <Button
+            android:id="@+id/thirdButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="三位 1000円 家電"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

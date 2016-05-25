@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import togepi.spaapp.SQLite.SQLite;
+import togepi.spaapp.common.HttpRequest;
+import togepi.spaapp.common.HttpResponse;
+import togepi.spaapp.utility.ConstData;
 import togepi.spaapp.utility.Genre;
 import togepi.spaapp.utility.PartySetting;
 
@@ -15,7 +18,8 @@ import togepi.spaapp.utility.PartySetting;
  */
 public class AdminFacade {
 
-    SQLite sqLite;
+    SQLite sqLite = new SQLite();
+    HttpRequest httpRequest = new HttpRequest();
 
     /**
      * パーティーを新規作成する
@@ -26,6 +30,9 @@ public class AdminFacade {
             String checkHostID = "";
             if(checkHostID == null || checkHostID.equals("")){
                 //POST hostIDを登録する
+                //GET hostIDを登録する
+                String getRequestUrl = ConstData.adminUrl + "/new/" + hostID;
+                httpRequest.doGet(getRequestUrl);
             }
         }
         catch (Exception e){
@@ -43,6 +50,7 @@ public class AdminFacade {
     public void SettingParty(int initialMoney, int prizeNumber, boolean rankingFlag, List<Genre> prizeGenreList, Context context){
         try{
             String hostID = sqLite.GetHostID(context);
+
             List<Integer> valueOdRank = GetValueOfRank(initialMoney,prizeNumber,rankingFlag);
 
             for(int i =1;i <= valueOdRank.size();i++){
@@ -51,7 +59,8 @@ public class AdminFacade {
             }
 
             //POST パーティの設定をする
-
+            //GET
+            String getRequestUrl = ConstData.adminUrl + "/" + hostID + "/edit/" + "?initial=" + initialMoney + "&current=0";
 
             //PartySettingをSQLに登録
             PartySetting partySetting = new PartySetting();

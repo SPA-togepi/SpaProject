@@ -3,14 +3,19 @@ package togepi.spaapp.user;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 import togepi.spaapp.SQLite.SQLite;
 import togepi.spaapp.admin.Prize;
 import togepi.spaapp.common.HttpRequest;
+import togepi.spaapp.common.HttpResponse;
+import togepi.spaapp.utility.ConstData;
 
 /**
  * Created by youmemusic on 2016/05/14.
@@ -20,8 +25,8 @@ public class UserFacade {
     public UserFacade() {
     }
 
-    SQLite sqLite;
-    HttpRequest httpRequest;
+    SQLite sqLite = new SQLite();
+    HttpRequest httpRequest = new HttpRequest();
 
     /**
      * パーティに参加する
@@ -33,11 +38,18 @@ public class UserFacade {
             String userID = sqLite.GetUserID(context);
 
             if(userID == null || userID.equals("")){
-                //新しくIDを作る
+                //GET 新しくIDを作る
+                String getRequestUrl = ConstData.userUrl + "/new";
+                HttpResponse response = httpRequest.doGet(getRequestUrl);
+                userID = response.getJsonArray().getString("id");
+
                 sqLite.SetUserID(userID, context);
             }
 
             //POST パーティに参加する
+            //GET パーティに参加する
+            String getRequestUrl = ConstData.userUrl + "/join/"+userID+"/"+hostID;
+            httpRequest.doGet(getRequestUrl);
 
             sqLite.SetHostID(hostID, context);
         }
@@ -57,19 +69,28 @@ public class UserFacade {
 
             //カンパ受付中か確認する
 
-            JSONObject json = new JSONObject();
-            json.accumulate("hostID",hostID);
-            json.accumulate("id",userID);
-            json.accumulate("donationAmount",donationAmount);
-
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//            requestJson.accumulate("id",userID);
+//            requestJson.accumulate("donationAmount",donationAmount);
+//
 //            httpRequest = new HttpRequest();
-//            httpRequest.doPost("",json.toString());
+//            httpRequest.doPost("",requestJson.toString());
+            //GET カンパする
+            String getRequestUrl = ConstData.userUrl+"/donate/" + "/" + userID + "/" + donationAmount;
+            httpRequest.doGet(getRequestUrl);
 
         }
         catch (Exception e){
             Log.e("Donate",e.toString());
         }
 
+    }
+
+
+    public int GetShakeDonate(){
+
+        return 0;
     }
 
     /**
@@ -105,6 +126,18 @@ public class UserFacade {
             String hostID = sqLite.GetHostID(context);
 
             //POST 現在の合計金額を取得する
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//
+//            HttpResponse response = httpRequest.doPost("",requestJson.toString());
+//            currentMoney = response.getJsonArray().getInt("currentMoney");
+
+            //GET 現在のユーザ情報を取得する
+            String getRequestUrl = ConstData.adminUrl + "/" + hostID;
+            HttpResponse response = httpRequest.doGet(getRequestUrl);
+
+            currentMoney = response.getJsonArray().getInt("current_money");
+
         }
         catch (Exception e){
             Log.e("GetCurrentMoney",e.toString());
@@ -121,10 +154,21 @@ public class UserFacade {
         int currentDonationAmount = 0;
 
         try{
-            String hostID = sqLite.GetHostID(context);
             String userID = sqLite.GetUserID(context);
 
             //POST 現在のカンパ金額取得
+//            JSONObject requestJson = new JSONObject();
+//            requestJson.accumulate("hostID",hostID);
+//            requestJson.accumulate("userID",userID);
+//
+//            HttpResponse response = httpRequest.doPost("",requestJson.toString());
+//            currentDonationAmount = response.getJsonArray().getInt("denationAmount");
+
+            //GET 現在のカンパ金額
+            String getRequestUrl = ConstData.userUrl + "/" + userID;
+            HttpResponse response = httpRequest.doGet(getRequestUrl);
+            currentDonationAmount = response.getJsonArray().getInt("donated_money");
+
 
         }
         catch (Exception e){
